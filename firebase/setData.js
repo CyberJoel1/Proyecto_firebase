@@ -2,11 +2,13 @@ const firebase = require("./firebase_connect")
 
 module.exports = {
     saveData: (req,res)=>{
-        const name= req.nombre;
-        const correo= req.email;
-        firebase.firestore().collection('pruebas').doc().set({
-            nombre: name,
-            email: correo
+        const {name, email, cedula, persona, curso}= req;
+        firebase.firestore().collection('registro').doc().set({
+            name: name,
+            email: email,
+            cedula: cedula,
+            persona: persona,
+            curso: curso,
           });
         res(null, {"message": "exitoso"})
     }
