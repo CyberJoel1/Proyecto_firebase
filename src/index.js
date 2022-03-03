@@ -21,11 +21,27 @@ app.use((req, res, next) => {
 app.get('/',(req,res)=>{
     res.send("Hola mundo")
 });
+
 app.post('/guardar',(req,res)=>{
-    ofirebase.saveData(req.body,(err,data)=>{
-        res.send(data);
-    })
+    try{
+        ofirebase.saveData(req.body,(err,data)=>{
+            res.send(data);
+        })
+    }  catch (err) {
+        console.log(err)
+      }
 });
+
+app.get('/listar',(req,res)=>{
+    try{
+        ofirebase.getData(req.body,(err,data)=>{
+            res.send(data);
+        })
+    }  catch (err) {
+        console.log(err)
+      }
+});
+
 
 app.listen(3001,()=>{
     console.log("servidor corriendo");
