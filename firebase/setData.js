@@ -11,18 +11,34 @@ const saveData= async (req,res)=>{
   res(null, {"message": "exitoso"})
 }
 const getData= async (req,res)=>{
+  const Ref = firebase.firestore().collection('registro');
+  const query = await Ref.where('alumn_Accept', '==',true).where('teacher_Accept', '==',false).get()
 
+  
+  let final = [];
+  query.forEach(doc => {
+    //console.log(doc.data());
+    //console.log(doc.id)
+    const union = {
+      id: doc.id 
+    };
+    const finalResult = Object.assign(union,doc.data());
+    console.log(finalResult)
+    final.push(finalResult)
+  });
+  res(null,final)
+}
+const AcceptData= async (req,res)=>{
+  console.log("llegue")
 
   const {id}= req;
-  console.log('No matching documents.');
-  const Ref = firebase.firestore().collection('registro');
-  const query = await Ref.where('cedula', '==',id).get()
-  if (query.empty) {
-    res(null, {"message": "no exitoso"})
-  }else{
-    res(null, query.docs)
-  }
+  firebase.firestore().collection("registro").doc(id).update({teacher_Accept: true});
+}
 
+const RetailData= async (req,res)=>{
+  console.log("llegue")
+  const {id}= req;
+  firebase.firestore().collection("registro").doc(id).update({alumn_Accept: false});
 }
 /*
 const getData= async (req,res)=>{
@@ -42,7 +58,7 @@ const getData= async (req,res)=>{
 }*/
 module.exports = {
     saveData,
-    getData
+    getData,AcceptData,RetailData
 }
 //export GOOGLE_APPLICATION_CREDENTIALS=
 

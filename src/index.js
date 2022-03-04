@@ -42,6 +42,25 @@ app.get('/listar',(req,res)=>{
       }
 });
 
+app.post('/rechazar',(req,res)=>{
+    try{
+        ofirebase.RetailData(req.body,(err,data)=>{
+            console.log("exito")
+        })
+    }  catch (err) {
+        console.log(err)
+      }
+});
+app.post('/aceptar',(req,res)=>{
+    try{
+        ofirebase.AcceptData(req.body,(err,data)=>{
+            console.log("exito")
+        })
+    }  catch (err) {
+        console.log(err)
+      }
+});
+
 
 app.listen(3001,()=>{
     console.log("servidor corriendo");
